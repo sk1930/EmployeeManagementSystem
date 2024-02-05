@@ -1,0 +1,223 @@
+https://github.com/RameshMF/fullstack-react-and-springboot/blob/main/employee-management-system/employee-management/ems-backend/src/main/java/net/javaguides/ems/controller/EmployeeController.java
+
+
+npm create vite@latest ems-frontend
+select react
+select JavaScript
+
+
+Now run:
+
+  cd ems-frontend
+  npm install
+  npm run dev
+  
+  
+  port number is in vite.config.js
+ 
+  http://localhost:3000/
+  
+  
+  PS E:\FullStack\FullStackEMS\ems-frontend> npm install bootstrap --save
+  
+  
+in extensions search for react snippets and install 
+
+once it is installed goto any ListEmployeeComponents.jsx 
+and type rfce
+
+
+
+using map method -- dummyData.map in ListEmployeeComponent.jsx
+map to iterate over array
+dummyData.map(employee=>
+                            <tr key={employee.id}>
+                                <td>{employee.id}</td>
+we are specifiying a key.
+each row should have a unique key. For that, let us use key attribute over here and then within a curly braces, just pass
+employee.id
+
+
+install axios library
+npm install axios --save
+
+create a folder services in src 
+EmployeeService.js
+
+
+useState Hook
+=============
+Next in components ListEmployeeComponent.jsx remove the dummy data and 
+So we are going to display the response of the rest instead of dummy data.
+So in order to hold the response of the rest API, we have to use the state variable. In functional
+components, in order to define the state variables, we have to use useState hook.
+Okay, So just remember, useState hook allows us to use state variables in a functional components.
+
+
+const [employees, setEmployees] = useState([])
+
+Next, useState hook is just a JavaScript function.
+So let us call useState hook and useState hook takes the initial value of state variable as parameter.
+So in this case let us give empty array.
+Next, useState hook returns an array with exact two values.
+First is a state variable .
+Second is a function that updates the state variable.
+
+
+so array should have two values.
+First is the state variable name, for example employees in this case.
+Second value as a function that updates the state variable.
+So the function name is setEmployees
+
+Okay, so useState hook is just a JavaScript function.
+We can pass the, you know, initial value to this, useState hook and useState hook returns the array
+with exact two values.
+First is the state variable.
+Second is the function that updates the state variable.
+
+useEffect hook
+==========
+Next, in order to make the rest API call or the Ajax call in a react functional components, we have
+to use useEffect hook.
+
+
+
+    useEffect(() => {
+        getAllEmployees();
+    }, [])
+Notice here useEffect takes two parameters.
+First parameter is the callback function.
+Second parameter is the dependency list.
+So here let us pass arrow function as a callback function.
+And second parameter is a dependency list.
+As of now there is no dependency. 
+So let us keep, you know, empty array like this [].
+Next, within a useEffect hook, let us call listEmployees method from EmployeeService and this
+method has a then method and look at here
+then method takes a promise object.
+
+   useEffect(()=>{
+        listEmployees().then(response => {
+            setEmployees(response.data);
+        }).catch(error => { 
+            console.error(error);
+        })
+    },[])
+
+
+
+useEffect(() => {
+        getAllEmployees();
+    }, [])
+
+    function getAllEmployees() {
+        listEmployees().then((response) => {
+            setEmployees(response.data);
+        }).catch(error => {
+            console.error(error);
+        })
+    }
+	
+	
+    // useEffect is used to make rest api call using axios in listEmployees Function in services/EmployeeService
+    //  setEmployees(response.data); sets the response data into employees, setEmployees is a useStateHook
+
+
+	
+repsone here is 		
+The callback to execute when the Promise is resolved.
+Attaches callbacks for the resolution and/or rejection of the Promise.
+@returns — A Promise for the completion of which ever callback is executed.
+response function we have setEmpoyees to process the data.
+
+So let us have a promise object over here.
+Response is a promise object.
+Next, let us have an arrow function
+Next, let us go ahead and let us set the response to this employees state variable.
+So in order to do that, we can use setEmployees method.
+So here, just call setEmployees and then pass response dot data.
+Perfect.
+Next, let us have a catch block over here.
+So if there are any errors while calling the Get all Employees Rest API that we can catch here and we
+can display that error to the console.
+So here, let us pass the error object.
+So in order to display this, let us use arrow function over here and then console dot error and then
+pass error object.
+Perfect.
+
+
+Run react using npm run dev
+error in console: Access to XMLHttpRequest at 'http://localhost:8090/api/employees' from origin 'http://localhost:3000' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+
+
+we need to handle this kind of CORS
+policy issue at a spring boot application.
+So Spring Boot provides @CrossOrigin annotation that we can use to allow React application to call
+the rest APIs
+
+
+in employeeController.java
+@CrossOrigin("*") //  star means all the clients can able to call the employee related APIs.
+
+restart the server in IntelliJIdea and VisualStudioCode
+
+
+adding header components
+============
+HeaderComponent.jsx 
+rafce stands for react arrow function component export
+then add footer components
+
+Configure React Routing
+==================
+npm install react-router-dom --save
+
+configure routing in App.jsx
+
+<BrowserRouter>
+we no need to configure the Route for HeaderComponent and FooterComponent because these two
+components are fixed.
+So we are going to only configure the Route for this ListEmployeeComponent.
+So here we have to use this BrowserRouter at a top level.
+For example, before this HeaderComponent, let us use BrowserRouter component here and let us close
+
+
+<Route>
+Routes is basically a container or a parent for all the individual Routes.
+ 
+=========== 
+Create React Functional component - EmployeeComponent ,  add employee button in listemployeeComponent and configure route
+1. React Functional component - EmployeeComponent
+
+add button in list 
+        <button className='btn btn-primary mb-2' onClick={addNewEmployee}>Add Employee</button>
+
+addNewEmployee is a function
+
+
+useNavigate Hook
+==========
+So whenever user click on this add employee button, then we have to navigate that user to the Add employee component, right?
+So in order to navigate user from one page to another page, we can use useNavigate hook.
+import { useNavigate } from 'react-router-dom'
+
+Next, useNavigate hook is nothing but a JavaScript function, so let us assign this JavaScript function
+to a constant variable so 
+const navigator = useNavigate();
+Next, let us use this navigator in a addNewEmployee function.
+So go to addNewEmployee function and here just call 
+navigator('/add-employee').
+
+let's configure the route for EmployeeComponent.
+So let us go to App.jsx and here let us type Route, let us use its path property and let's configure
+the URL /add-employee.
+      <Route path='/add-employee' element = { <EmployeeComponent/>}/>
+
+
+
+
+Add employee form
+===========
+1. define state variables firstName, lastName, email in EmployeeComponent using useState Hook
+2. design add employee form using html and bootstrap
+3. create javascript function to handle onclick event of form submit

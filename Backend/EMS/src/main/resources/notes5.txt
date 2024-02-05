@@ -1,0 +1,93 @@
+In this lecture, we are going to build delete Employee Rest API.
+So let us go to our project over here.
+Well, first we will change the service layer and then we will change the controller layer because the
+controller layer is depends on service layer.
+So let us go to EmployeeService interface over here.
+And within this interface let us define the method.
+So let us give white as a return type of the method and let us give method name as deleteEmployee and
+let us pass the employeeId as a parameter to this method.
+Next, let us go ahead and let us implement this deleteEmployee method in our EmployeeServiceImpl class.
+So go to EmployeeServiceImpl class over here.
+Just mouse over on this class.
+Click on this implement methods and choose the method that you want to implement
+Click on
+Okay
+All right.
+Next, let us go ahead and let us implement this deleteEmployee method.
+So here, first of all, we need to add the validation.
+Like if employee with a given ID is not exist in database, then we have to throw the resource not found
+exception, isn't it?
+So if you go to updateEmployee method over here, here we have already written the logic
+Okay.
+So let us copy this piece of code and go to deleteEmployee method
+and here just paste this piece of code.
+So here basically we are calling findById method and this findById method returns optional.
+So again, here we are calling orElseThrow method of optional object.
+And here basically we are providing the lambda implementation of supplier functional interface.
+So basically if employee with a given ID is not exist in database, then this piece of code will basically
+throw the resource not found exception.
+Next, let us call employeeRepository.
+It has deleteById method and then pass the employeeId as a parameter to this method
+Okay
+Perfect.
+So this deleteById method will basically delete the employee by ID
+All right.
+Next let us create delete employee REST API that will internally call this method.
+So go to EmployeeController over here within EmployeeController, let us build delete employee API.
+So here, let me write the comment first build delete employee API.
+So first we'll create a method and then we'll convert that method into rest API by using spring annotations.
+So here just type public and then ResponseEntity as a return type.
+So let us pass string as a type and then let's do method name as deleteEmployee
+All right.
+And let us pass employeeId as a parameter to this method
+Perfect.
+Next, within our deleteEmployee method, let us call employeeService.
+It has deleteEmployee method and then pass employeeId.
+Next, let us have a return statement return ResponseEntity
+.ok() method
+and let us pass the success message that is employee deleted successfully
+Something like that
+Perfect.
+Now we have created deleteEmployee method.
+Let us make this method as a rest API by using spring annotations.
+So here let us annotate this method with @DeleteMapping annotation. Well, we use @DeleteMapping
+annotation to map the incoming http delete request to this method.
+Next, we need to pass the ID to this annotation.
+So here within a curly braces, just pass the ID.
+So this ID is nothing but a URL template variable and we need to bind the value of this template variable
+to the method argument.
+So in order to do that we can use @PathVariable annotation and then pass template variable name.
+Perfect.
+Now we have built delete employee API.
+Next, let us rerun our spring boot application and let us test this using postman client.
+So from here I want to stop and run the spring boot application.
+Well, our spring boot application is up and running.
+Next, let's go to Postman client over here.
+And here, let me copy this link and let me create a new request.
+And here let us choose http delete method and let us enter the request URL http://localhost:8080/api/
+employees.
+And here we need to pass the employeeId that we are going to delete.
+For example, let us say we want to delete the employee with ID one.
+Then we have to pass the employeeId one in the request URL.
+Next, if you look at the database table, the employees table.
+So employees table has a employee with ID one
+Okay.
+Now we are going to basically delete the employee with ID one from the employees table.
+So let us go back to postman client and go ahead and click on Send button over here and look at here
+the response employee deleted successfully and the status code 200
+Okay.
+Next, let us go to MySQL workbench go to employees table, select rows and look at here.
+The employee with the ID one is successfully deleted from the employees table.
+It means the delete Employee rest API is working as expected.
+Next, let us delete one more employee like we are going to delete an employee with ID three.
+So let us go back to postman client and here let us pass the employeeId that we want to delete.
+We are going to delete the employee with ID three.
+Next click on send button
+and there we go.
+We got the response.
+That is success response.
+Next, let us go to MySQL workbench, Select rows from the employees table
+and there we go.
+You can see here the employee with ID three is successfully deleted from the employees table.
+All right.
+It means the delete employee is working as expected.

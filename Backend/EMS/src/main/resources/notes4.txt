@@ -1,0 +1,134 @@
+In this lecture, we are going to build Update Employee Rest API.
+So let us go to our project in IntelliJ idea.
+Well, first we want to change the service layer and then we will change the controller layer because
+the controller layer is dependent on service layer.
+So let us go to EmployeeService interface over here.
+Within this interface, let us define the method.
+So here let us give EmployeeDto as a return type of the method and let us give method name as updateEmployee
+and let us pass employeeId as a first parameter and the EmployeeDto as a second parameter.
+And this EmployeeDto basically contains the updatedEmployee details.
+Okay, so let us call it as updatedEmployee
+Okay, perfect.
+Now we have defined updateEmployee method in our EmployeeService interface.
+Next, let us implement this method in an EmployeeServiceImpl class.
+So let us go to EmployeeServiceImpl class over here.
+Just mouse over on this class.
+Click on this implement methods and then click on Okay Method.
+Now let us go ahead and let us implement updateEmployee method. Within updateEmployee method,
+Let us first add the validation like if employee with a given ID is not exist in database, then we
+have to throw the resource not found exception, isn't it?
+So let us write that logic here.
+So just call employeeRepository.
+It has findById method and notice here,
+findById method returns optional of type Employee.
+So let us call findById method over here and then pass employeeId as a parameter
+and then optional has orElseThrow method.
+So let us call orElseThrow method over here and notice here.
+orElseThrow method takes supplier as a functional interface and we have to provide the lambda expression
+implementation for this supplier functional interface.
+So just call this method and then let us construct the lambda expression.
+So here new resource not found exception and then let us pass the custom exception message.
+Let us say employee is not exist with given ID and then pass employeeId dynamically
+Perfect.
+Next, let me put the semicolon over here
+All right.
+And this orElseThrow method returns an employee object.
+So here, let us take the result of orElseThrow method in a local variable of type Employee
+Perfect.
+Next, we have the updatedEmployee object.
+It contains all the employee updated information.
+So let us set all the details from updatedEmployee object into this employee object.
+Okay, so here the employee.setFirstName and then updatedEmployee.getFirstName, employee
+dot set last name and then updatedEmployee dot get last name, employee dot set email and then update
+the employee dot
+get email perfect.
+Next, let us call employeeRepository.
+It has a save method and then pass this employee object.
+Okay, so here basically we have updated this employee object with first name, last name, email
+and again, we are saving this employee object by using save method.
+So basically this save method perform both save and update operation.
+Well, if the employee object contains ID, then the save method internally perform the update operation.
+And if the employee doesn't contain the primary key ID then it will perform the insert operation
+All right.
+Next, the Save method returns the updatedEmployee object.
+So here, let us declare the updatedEmployee object like this.
+Perfect.
+Next, if you can see here, updateEmployee method returns the EmployeeDto.
+So let us convert this updatedEmployee entity into EmployeeDto.
+So here go to return statement, remove this null and then call employee method it has mapped to employee
+method and then pass updatedEmployee object as a parameter.
+Now we have implemented updateEmployee method in a EmployeeServiceImpl class.
+Next, let us create the rest API that will internally call this updateEmployee method.
+So go to the EmployeeController over here.
+Within employee controller, let us build update Employee Rest API.
+So here, let me first write the comment build update employee Rest API.
+Let us first create a method and then we'll convert that method into Rest API by using spring annotations.
+So here just a public ResponseEntity and then pass EmployeeDto as a type.
+Let us give method name as updateEmployee.
+All right, and let us pass employeeId as a first argument, an EmployeeDto as a second argument.
+So this employeeId is nothing but updatedEmployee information
+Perfect.
+Next, let us call the employeeService.
+It has updateEmployee method and then pass employeeId as a first parameter.
+UpdatedEmployee as a second parameter
+Perfect.
+Next, this updateEmployee method returns a EmployeeDto.
+So here, let us have a local variable of type EmployeeDto
+All right.
+Next, let us have a return statement, return ResponseEntity and then call ok() method and then pass
+EmployeeDto.
+All right, now we have created updateEmployee method.
+Let us make this method as a rest API by using spring annotations.
+So let us annotate this method with @PutMapping annotation.
+Well we use @PutMapping annotation to map incoming http put request to this method.
+Next, let us pass the ID.
+So here is the syntax within a open and close curly braces.
+Just pass the ID.
+So this ID is nothing but a template variable and we need to bind the value of this template variable
+to the method argument.
+So in order to do that we can use @PathVariable annotation over here.
+And next, let us pass the template variable that is ID
+Perfect.
+Next, we need to use one more annotation that is @RequestBody annotation.
+Well, this @RequestBody annotation will basically extract the updated Json from the request and
+it will convert that Json into EmployeeDto Java object
+Okay
+Perfect.
+Now we have built update employee API.
+Next, let us rerun our spring boot application and let us test this rest API using postman client.
+So from here I am going to stop and rerun the spring boot application.
+Well, notice here our spring boot application is up and running in an embedded Tomcat server on port 800.
+Next, let us go to postman client over here.
+And here, let me copy this URL and let me create the new request.
+And here let us choose Http put method and let us enter the request URL.
+http://localhost:8080/api/employees/1
+And then we need to pass the employeeId that we are going to update.
+So let us say we want to update the employee with ID one.
+All right.
+Next, let us pass the updated information in the body.
+So click on Body Raw Content type Json
+and here we need to pass the Json.
+So here, let me quickly create the Json firstName.
+Well, if you go to MySQL workbench and go to employees table over here and if we look at here, the employee
+ID one has a first name Ramesh last name Fadatare, email ID, ramesh@gmail.com.
+So let us update all these three column values.
+So let us update the first name from Ramesh to Ram, last name from Fadatare to Jadhav, email id Ramesh@gmail.com
+to ram@gmail.com.
+All right, so let us go back to postman client and here let us give the updated first name that is
+Ram and last name Jadhav
+email
+ram@gmail.com.
+Next, go ahead and click on Send button over here
+and there we go.
+You can see the response.
+The first name is updated, last name is updated and email is also updated.
+Let us verify this information in database table as well.
+So let us go back to MySQL workbench.
+And here let us select rows from employees table.
+Notice here the employeeId one.
+The first name is changed from Ramesh to Ram.
+Last name is changed from Fadatare to Jadhav
+Email address changed from ramesh@gmail.com to ram at gmail.com.
+It means we have successfully built update employee rest API.
+All right, great.
+In next lecture we'll build delete employee rest API.

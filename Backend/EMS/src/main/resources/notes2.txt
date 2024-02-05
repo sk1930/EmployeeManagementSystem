@@ -1,0 +1,72 @@
+Get Request
+
+//for get first start with  Service,customException to throw exception  when employeeId is not present in database
+
+goto exception package and create ResourceNotFoundException class, next is EmployeeServiceImpl, employeeeController\
+
+
+
+
+Hi everyone, Welcome back. In this lecture, we are going to build Get Employee Rest API. So let's go to our project in
+IntelliJ idea and let us first change the service layer and then we'll change the controller layer because the
+controller layers depends on service layer. So let's go to EmployeeService interface over here. Within this interface,
+let us define the getEmployeeById method. So here let us give the EmployeeDto as a return type of the method and let us
+give method name as getEmployeeById and let us pass employeeId as a parameter to this method Perfect. Now we have
+defined getEmployeeById method in a EmployeeService interface. Next, let us implement this method in
+EmployeeServiceImpl class. So let us go to EmployeeServiceImpl class over here and just mouse over on this class. And
+here we have implement methods link. So go ahead and click on this link over here and then select the method that we
+want to implement. Next click on Okay, Perfect. So here we can implement the getEmployeeById method. Well, before
+implementing this method, let's go ahead and let us first create one custom exception. Well, whenever a Employee with a
+given ID is not exist in database, then we have to throw the custom exception, isn't it? So let us go ahead and let us
+first create the custom exception. So go to exception package right click new and choose Java class. Let us give an
+exception name as ResourceNotFoundException. Perfect. Next, let us extend this class from RuntimeException and then let
+us create a parameterized constructor. Public ResourceNotFoundException and then let us pass message as a parameter All
+right. And here let us call super keyword to pass this message to the superclass constructor. Next, let us annotate
+this class with @ResponseStatus annotation and let us specify the Http status. So here let us give Http status not
+found. Well, if Employee with a given ID is not exist in database, then we will throw this ResourceNotFoundException
+exception and then spring boot will catch this exception and it will get the error message from the exception and it
+will send the error message along with the Http status to the client. Next, let us go back to EmployeeServiceImpl class
+over here. Next, let us implement this getEmployeeById method. So here, let me maximize this. So within a
+getEmployeeById method, let us call EmployeeRepository. It has findById method and notice here. findById method returns
+optional of type Employee. So let us call findById method over here and just pass employeeId. Next optional has
+orElseThrow method. So here let us call orElseThrow method over here and notice here. orElseThrow method returns an
+Employee object and orElseThrow method takes Supplier as a functional interface and we have to pass the lambda
+expression implementation of this supplier functional interface. So let us call this orElseThrow method over here and
+let us create the lambda expression. So here, lambda symbol and then new ResourceNotFoundException and let us pass the
+message Employee is not exist with a given ID All right. And let us pass the ID dynamically over here Let say
+employeeId perfect Next. Let me maximize this a bit. Next you can see the typo here exists, so let me correct it.
+Employee is not exist with a given ID and then employeeId. Next, Let me also break this statement Perfect. So this
+orElseThrow method returns a Employee object. So here, let us take the result of this method in a local variable of
+type Employee. Perfect. Next, if you can notice here, getEmployee method returns the Employee So let us convert this
+Employee entity into EmployeeDto. So go to return statement, remove this null and let us call EmployeeMapper over here.
+It has a mapToEmployee method and then pass the Employee entity object Perfect. Now we have implemented getEmployeeById
+method in a EmployeeServiceImpl class. Next, let us create the rest API that will internally call this getEmployeeById
+method. So here, let me minimize this and go to EmployeeController over here and within EmployeeController let us build
+getEmployeeById rest API. So here, let me write the comment build get Employee rest API. Well, creating rest API Using
+spring boot is very simple. We just need to create a method and then we will convert that method into rest API by using
+spring annotations. So here, let us first create a method public and then ResponseEntity as a return type.
+ResponseEntity class is a generic, so let us pass EmployeeDto as a type. And next, let us give a method name as
+getEmployeeById. Next, let us pass employeeId as a parameter to this method. Within this getEmployeeById method, let us
+call employeeService. It has getEmployeeById method and then pass employeeId perfect. So this getEmployeeById method
+returns the EmployeeDto. So here, let us take the result of this method in a local variable of type EmployeeDto.
+Perfect. Next let us have a return statement. Return ResponseEntity. It has a method. And next let us pass EmployeeDto
+as a parameter to this method. Perfect. Now we have created getEmployeeById method. Next, let us make this method as a
+rest API by using spring annotations. So here let us annotate this method with @GetMapping annotation. Will we use
+@GetMapping annotation to map the incoming Http get request to this method. Next, let us pass the ID. Well, this ID is
+basically called a URI template variable. Next, we need to bind the value of this URI template variable to this method
+argument. So in order to do that we have to use @PathVariable annotation. So here let us use @PathVariable annotation
+and we need to also pass the URI template variable name here that is ID. So notice here the template variable name is
+ID and the method argument name is employeeId, so both the variable names are different. That's why we have to pass the
+template variable name to the @PathVariable annotation. Then only the @PathVariable annotation will bind the value of
+this template variable to this method argument. Okay, perfect. Now we have created get Employee rest API. Next, let us
+rerun our spring boot application and let us test this rest API using postman client. So from here I want to stop and
+rerun the spring boot application. Well, notice here our spring boot application is up and running in embedded Tomcat
+server on port 8080. Next let us go to postman client over here and let us create a new request. And here let us choose
+Http get method and let us enter the request url http://localhost:8080 /api/employees/1 Well, if you go to MySQL
+workbench over here and if you go to database and employees table, you can see here we have a Ramesh Employee and
+Employee has ID one. So in order to retrieve this, you know, Ramesh Employee we have to pass the ID one in the URL.
+Okay, so let us go back to postman client and here we have passed employeeId one. Okay, next click on send button and
+there we go. You can see the response. The rest API returned the response and the response contains the Employee object
+in a Json format and the status 200. Okay. It means we have successfully built get Employee rest API. In next lecture,
+we are going to build Get all Employees rest API. All right, great. I will see you in the next lecture.
+

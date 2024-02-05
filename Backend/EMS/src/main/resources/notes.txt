@@ -1,0 +1,87 @@
+
+//for post request
+// 1st we created entity, next dto, mapper, repository, Service, serviceImpl, Controller
+
+
+
+https://adp-gptlearning.udemy.com/course/full-stack-java-development-with-spring-boot-react/learn/lecture/38286520#questions/21272088
+https://www.udemy.com/course/full-stack-java-development-with-spring-boot-react/?referralCode=86222EF6D33E4738963E
+https://github.com/RameshMF/fullstack-react-and-springboot/
+
+Welcome back.  In this lecture, we'll build an Add Employee rest API. Well, let us take a look into the development steps.
+First, we'll create the service layer. Well, if you can see here, the controller layer is depends on service layer. And the
+service layer is depends on repository layer. And we basically create the rest APIs in a controller layer, right? So controller
+layer depends on service layer. So let us first create the service layer. Well, we have already created the repository layer
+so we don't have to write any methods in a repository layer as of now. So let us first create the service layer and then
+we'll build the rest API in a controller layer. Okay. So create the service layer. Like we'll create an EmployeeService
+
+interface and then we create an EmployeeServiceImpl class that implements EmployeeService interface. Next, we'll build the Add
+Employee REST API in a controller layer, and next we'll test this add Employee REST API using postman client.
+
+Okay, so let us go to our project in IntelliJ idea. And here let us first create the service layer. So go to service package right click on it new
+and then choose Java class Select Interface. Let us give interface name as EmployeeService. Within EmployeeService interface,
+Let us define the method. So let us give method method return type as EmployeeDto let us give method name as createEmployee and
+let us pass EmployeeDto as a parameter to this method Perfect. Next, let us create EmployeeServiceImpl class that implements
+this interface and its methods. Next, go to service package. Right click on this package new and then choose package. Lets give
+package as impl. The impl stands for implementation. So right click on package new and then choose Java class. Let's give class
+name as EmployeeServiceImpl Perfect. Next, this class implements the EmployeeService interface. And next, go ahead and mouse
+over on this class. And here you will get the option to implement the methods like the link. So go ahead and click on this
+Implement methods link over here and select the method that you want to implement. Click on Okay, Perfect. Next, let us annotate
+this class with @Service annotation and make sure that you choose @Service annotation from org.springframework.stereotype
+package. Well, this annotation tells spring container to create the spring bean for this class. Next, let us implement
+createEmployee method. Well, before implementing this method, let us first inject the dependencies. So here private
+EmployeeRepository employeeRepository. Well, we are going to use constructor based dependency injection to inject the
+dependencies and instead of creating the constructor manually, let us use Lombok annotation. So let us annotate this class with
+@AllArgsConstructor annotation. Okay, now we have injected EmployeeRepository as a dependency. Next, let us implement
+createEmployee method. So go to createEmployee method and within this createEmployee method, first we need to convert
+EmployeeDto into Employee entity because we need to store the Employee entity into database, isn't it? So here let us say
+Employee employee equal to let us call EmployeeMapper class to map EmployeeDto to Employee entity. So here EmployeeMapper it has
+mapToEmployee method and then pass Employee to okay, now we have converted EmployeeDto to Employee JPA entity. Next, let us save
+this Employee entity into database. So for that let us call employeeRepository. It has a save() method and then pass Employee
+entity object perfect. Next this save() method return the saved Employee object. So let us get into a local variable. So here
+Employee let us give a variable name as savedEmployee. Next we need to return savedEmployee object back to the client. So here
+let us convert savedEmployee JPA entity into EmployeeDto. So here, let us remove this null and let us type EmployeeMapper. It
+has mapToEmployeeDto and let us pass savedEmployee Perfect. Now we have implemented createEmployee method.
+
+
+Next go to controller
+package over here. Right click on controller package new and then to Java class. Let us give class name as EmployeeController.
+Next, let us annotate this EmployeeController class with @RestController annotation. Well, once we annotate a class with
+@RestController annotation, then this class becomes a spring rest controllers and this class is capable to handle Http requests.
+Next, let us annotate this class with one more annotation that is @RequestMapping annotation. Well, here we are using
+@RequestMapping annotation to define the base URL for all the rest APIs that we are going to build within this controller. So
+here, let us give the base URL /api/employees Okay, perfect. Next, within this EmployeeController, let us first inject the
+dependencies. So private EmployeeService employeeService and instead of creating the constructor manually, let us annotate this
+class with @AllArgsConstructor annotation Okay. Next let us build an add Employee rest API. So here let me write the comment
+
+build Add Employee rest API. Well, creating rest API using spring boot is very simple. First, we need to create a method and
+then we will make that method as a rest API by using spring annotations. So here let's first create a method public and let's
+give return type of the method as a ResponseEntity. So ResponseEntity is a generic class. We have to pass the type. So here let
+us pass EmployeeDto as a type. Next, let us give method name as createEmployee and let us pass EmployeeDto as a parameter to
+this method. And next here let us call EmployeeService. It has createEmployee method and then pass EmployeeDto object as a
+parameter to this method and this create Employee method returns a saved Employee. So here EmployeeDto and let us give the
+variable name as savedEmployee. Next, let us have a return statement. return object of ResponseEntity. So let us pass values to
+the constructor. So first value as savedEmployee. Second value as Http status code. So here just type http status dot created.
+Next, let us make this method as a rest API by using spring annotations. So here let us annotate this method with @PostMapping
+annotation. When we use @PostMapping annotation to map the incoming http post request to this method. Next, let us use one more
+annotation here that is @RequestBody annotation. Well, this @RequestBody annotation will extract the Json from the Http request
+and it will convert that Json into Employee Java object Okay Perfect. Now we have created add Employee Rest API. Next, let us
+run our spring boot application and let us test this rest API using postman client. So from here I am going to stop and rerun
+the spring boot application.
+
+We'll notice our spring boot application is up and running and embedded Tomcat server on port 8080.
+Next, let's go to the postman client over here. And here. Let me create a new request. Let us choose Http post method and let us
+enter the request url http://localhost:8080 /api/employees and next go to the body select raw select content of Json and within
+the body we need to pass the Json object. So here let's create a Json object. So firstName. Let us give first name as Ramesh and
+then lastName. Let us give last name as Fadatare and then email Let us your email as Ramesh@gmail.com. Well if you can go to our
+project in IntelliJ idea and go to create Employee Rest API and here you can see EmployeeDto and if you go inside EmployeeDto
+and this EmployeeDto class has the fields, firstName , lastName, email and if you go to postman client and if you can notice the
+Json over here, the attributes name like firstName, lastName, email. So whenever you pass the Json in the request, make sure
+that the Json attributes should be same as the class fields because we are using @RequestBody annotation here to extract the
+Json and convert that Json into EmployeeDto Java class object and in order to convert a Json into Java object, the Json
+attributes and Java object fields should be same Okay Perfect. Next, let's go to postman client over here.+ Next, go ahead and
+click on Send button. And there we go. We got the response of the rest API. And if you notice here, the status 201 created and
+the saved Employee object in the response. Next, let us verify whether this record is stored in a MySQL database table or not.
+So let us go to MySQL workbench over here and go to employees database. Just refresh, go to employees table, select rows and there we go. Ramesh, Employee successfully stored in a employees table. All right. It means we have successfully built an
+Employee rest API. In next lecture we will build get single Employee rest API. All right, great. I will see you in the next
+lecture.

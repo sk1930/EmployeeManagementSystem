@@ -1,0 +1,52 @@
+In this lecture, we are going to build get all Employees Rest API. So let's go to our project in IntelliJ idea over
+here. And first we will change the service layer and then we will change the controller layer because the controller
+layer depends on service layer. So let us go to EmployeeService interface over here. And within this interface, let us
+define the method. So let us go return type of the method as List Next, let us give method name as getAllEmployees All
+right. Now we have created getAllEmployees method in our EmployeeService interface. Next, let us implement this method
+in our EmployeeServiceImpl class. Let us go to EmployeeServiceImpl class over here and just mouse over in this class.
+Click on this Implement Methods link. Next, let us select the method that you want to implement. Click on Okay All
+right. Now let us go ahead and let us implement this getAllEmployees method over here within a getAllEmployees method.
+Let us call EmployeeRepository. It has findAll method. We will notice here there are multiple overloaded. findAll
+methods. Well, we want to choose the findAll method It doesn't take any method argument and findAll method returns a
+list of type Employee entity. Okay, so let us select findAll method over here. Next, let us take the result of this.
+findAll method in a local variable of type list So here, let us declare a list. List is a generic. Let us pass Employee
+class as a type, let us call it as employees. Perfect. Now we have a list of Employee entities, but if you can see
+here, getAllEmployees method returns list of EmployeeDto. Right? So let us convert a list of Employee entities into
+list of EmployeeDto's. So here go to return statement. Remove this null and here just call employees. So employeea is a
+list. It has a stream method and then stream has a map method. And notice here map method has a function as a
+functional interface and we need to provide the lambda expression implementation for this function functional
+interface. So let us select map method over here. So basically we use map method to map one object into another object,
+and in our case we have to convert Employee entity into EmployeeDto right, so here let us have a lambda expression
+implementation. So here let us pass Employee as a parameter and let us have lambda symbol and then call EmployeeMapper.
+It has mapToEmployeeDto method and then pass Employee object Perfect. And finally let us call collect method to collect
+the result. So here we are using list. So let us call this collect method it takes to list as a parameter. Now we have
+written a logic to convert a list of Employee entities into list of EmployeeDto's. Next, let us create the rest API
+that will internally call this method. So go to EmployeeController over here and within EmployeeController, let us
+build get all Employees rest API. So here let me write the comment build, get all Employees rest API. Well, creating
+rest API using spring boot is very simple. First, we need to create a method and then we will convert that method into
+Rest API by using spring annotations. So here, let us first create the method public ResponseEntity as a return type
+ResponseEntity is a generic, so let us pass list as a type. List is also a generic interface. Let us pass EmployeeDto
+as a type and let us give method name as getAllEmployees All right. And here let us call employeeService. It has
+getAllEmployees method. So getAllEmployees method returns a list of EmployeeDto. So here let us declare a local
+variable of type list. List is generic. Let us pass EmployeeDto as a type and let us give variable name as employees
+Perfect. Next, let us have return statement return ResponseEntity and then call its ok() method and then pass Employee
+objects as a parameter Perfect. Now we have created getAllEmployees method. Let us make this method as a rest API by
+using spring annotations. So here let us annotate this method with @GetMapping annotation. Well we use @GetMapping
+annotation to map incoming http get request to this particular method All right Perfect. Now we have built get all
+Employees Rest API. Next, let us rerun our spring boot application and let us test this rest API. So from here I am
+going to stop and rerun the spring boot application. Well, our spring boot application is up and running in embedded
+Tomcat server on port 800. Next, let us go to postman client over here. And here, let me copy this URL and let me
+create the new request. Let us give http get method and let us enter the URL http://localhost:8080/api/employees click
+on send button and there we go. You can see the array. Array contains a single Json object. So let us insert one more
+Employee. So go to add Employee request over here and let us change the Json post name. Let us say Sanjay. Last name
+Let us say Jadhave Email sanjay@gmail.com. Next click on Send button and there we go. We got the response and the
+status code 201 created. Next, let us go to get all Employees request over here and then click on send button and there
+
+we go. You can see here there are total two Employees. And in a response also there are two Employees. Next, let us insert one more Employee. So go to post request and here let us give first name as Tom and last name Cruise Email
+tom@gmail.com click on Send button and there we go. We got the response with the Employee ID three. Next, let us go to
+get all Employees request over here, click on Send button and there we go. You can see a Tom Employee is present in an
+array Okay. It means we have successfully built get all Employees rest API. Let us also verify the database table. So
+go to MySQL workbench go to employees table, select rows and notice here there are total three Employees. And if you
+look at the response of the rest API, there are total three Employees Json objects present in the array Okay. It means
+we have successfully built get all Employees rest API. In next lecture, we will build update Employee rest API All
+right.
