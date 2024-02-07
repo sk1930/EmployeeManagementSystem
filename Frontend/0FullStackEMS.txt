@@ -219,5 +219,113 @@ the URL /add-employee.
 Add employee form
 ===========
 1. define state variables firstName, lastName, email in EmployeeComponent using useState Hook
-2. design add employee form using html and bootstrap
+	  const [firstName, setFirstName] = useState('')
+
+
+	useState Hook is nothing but a JavaScript function so you can pass the initial values.
+	So here let us pass empty value and then const and then array.
+	So here let us give a state variable name as firstName and let us use the function name setFirstName.
+	So here firstName is a state variable name and setFirstName
+	is a function name that we use to update the firstName state value.
+
+
+2. design add employee form using html and bootstrap css classes
+	whenever a user enters some value in the text box, then we have to get that value right.
+	So for that we can use onChange event handling.
+	So here just type onChange and just pass the event handler name.
+	Let us say handleFirstName.
+	So this is the event handler name.
+	Next, let us create a JavaScript function to get the value from this input text box.
+
 3. create javascript function to handle onclick event of form submit
+		e.preventDefault(); // to prevent the default actions while submitting the form
+    
+Connecting React App to add employee
+=======================
+1. in employeeService write function createEmployee to
+call add employee rest API
+
+2. make changes to saveEmployee function in employeeComponent to call createEmployee method from employeeService.js
+3. navigate to list employees page after form submission done using useNavigate Hook
+
+
+
+Form valudation  // #validation 
+==========
+1. use useState hook to initialize the state variables that will hold the validation errors.
+2. write the validation function that checks the form data and returns validation errors.
+3. validate the form on submission.
+4. display the validation errors.
+	go to browser in a new tab, just search for bootstrap validation.
+	Click on this first link.
+	https://getbootstrap.com/docs/5.0/forms/validation/#how-it-works
+	
+className={`form-control ${errors.firstName ? 'is-invalid': ''}`}
+
+	So here basically we need to use validation related couple of bootstrap classes, for example we are
+	going to use is invalid CSS class and then we are going to use
+	Invalid feedback.
+	Okay, so these two classes we are going to use to add the validation to the input fields
+	All right.
+	So let's go back to our project and here go to input field for this first name and here is a className
+	property.
+	So here we need to dynamically set the bootstrap CSS class based on the validation error.
+	
+{ errors.firstName && <div className='invalid-feedback'> { errors.firstName} </div> }
+
+	
+	Next, we need to show the validation error message right after the input text box.
+	After the input element, let us add the JavaScript code.
+	So here errors dot first name.
+	So if the first name contains the validation error message, then we're going to display that validation
+	error message here.
+	So for that, let us add the condition and then let us have a div
+	Let us close this div over here and let us add the bootstrap CSS class for this
+	Div.So class name and let us give the bootstrap class name that is in valid-feedback
+	Perfect.
+
+So, in summary, if there is an error message stored in errors.firstName, this code will render a <div> element with the class "invalid-feedback" containing that error message. Otherwise, it won't render anything. This is commonly used for displaying validation errors in React forms.
+
+
+update employee page
+======================
+1. we going to add update button to the List employees page.
+2. Next, we'll add a route for update employee in the App component.
+useNavigate in ListEmployeeComponent to navigate the user to EmployeeComponent page.
+3. change page title dynamically, Well, we are going to use EmployeeComponent to perform both Add and update operations.
+So dynamically we have to change the page title.
+if employee id is present in the url , then it should be update
+else add
+
+useParams Hook
+============
+The useParams hook returns an object of key/value pairs of the dynamic params from the current URL that were matched by the <Route path>.
+  const {id} = useParams();
+
+
+
+show the values in update employee page
+===================
+1. in employeeService, write code to calll Get Employee rest api using axios
+2. use useEffect hook to populate the employee data in the form in EmployeeComponent.
+
+Connect REST api to update employee form
+========================
+1. in the EmployeeService,
+we need to write a rest client code to call update employee http using Axios.
+2. we will change EmployeeComponent.saveOrUpdateEmployee method to perform both add and
+update employee operations.
+
+
+
+Delete Employee
+============
+
+1. in employeeService code to call delete employee rest api using axios
+2. delete button to listemployeeComponent
+3. javascript function to handle button click event
+
+
+
+
+

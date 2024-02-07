@@ -16,7 +16,7 @@ export default ListEmployeeComponent
 
 // type rafce to get
 import React,{useState,useEffect} from 'react'
-import { listEmployees } from '../services/EmployeeService'
+import { deleteEmployee, listEmployees } from '../services/EmployeeService'
 import { useNavigate } from 'react-router-dom'
 
 /* this is all for dummyData
@@ -88,20 +88,30 @@ const ListEmployeeComponent = () => {
     const navigator = useNavigate();
 
 
-    useEffect(()=>{
+    /*useEffect(()=>{
         listEmployees().then(response => {
             setEmployees(response.data);
         }).catch(error => { 
             console.error(error);
         })
-    },[])
+    },[])*/
+    useEffect(()=>{getAllEmployees()},[]);
+
+    function getAllEmployees(){
+        listEmployees().then(response => {
+            setEmployees(response.data);
+        }).catch(error => { 
+            console.error(error);
+        })
+    
+}
     // useEffect is used to make rest api call using axios in listEmployees Function in services/EmployeeService
     //  setEmployees(response.data); sets the response data into employees, setEmployees is a useStateHook
 
     /* above can also be called as 
 
     Here getAllEmployees is a callback function.
-    
+
         useEffect(() => {
         getAllEmployees();
     }, [])
@@ -117,9 +127,26 @@ const ListEmployeeComponent = () => {
 
 
 
+
     function addNewEmployee(){
         navigator('/add-employee')
 
+    }
+    function updateEmployee(id){
+        // this is ` backtick  not ' single quote
+        navigator(`/edit-employee/${id}`)
+
+
+    }
+    function removeEmployee(id){
+        console.log(id);
+
+        deleteEmployee(id).then((response)=>{
+            getAllEmployees();
+
+        }).catch(error=>{
+            console.error(error);
+        })
     }
     return (
         <div className='container'> 
