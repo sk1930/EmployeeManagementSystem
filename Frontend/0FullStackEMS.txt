@@ -1,5 +1,6 @@
 https://github.com/RameshMF/fullstack-react-and-springboot/blob/main/employee-management-system/employee-management/ems-backend/src/main/java/net/javaguides/ems/controller/EmployeeController.java
 
+There are more notes at Backend --\EMS\src\main\resources
 
 npm create vite@latest ems-frontend
 select react
